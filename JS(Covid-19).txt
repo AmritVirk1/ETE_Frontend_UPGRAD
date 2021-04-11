@@ -1,0 +1,41 @@
+function showUpdates()
+{
+    event.preventDefault();
+    var country=document.getElementById("country").value;
+    var sDate=document.getElementById("start").value;
+    var eDate=document.getElementById("end").value;
+
+    var confirmed=document.getElementById("co");
+    var active=document.getElementById("ac");
+    var deaths=document.getElementById("de");
+
+    console.log(sDate);
+
+    if(country=='' || sDate=='' || eDate=='')
+    alert("enter the required field");
+
+    else
+    {
+        var url="https://api.covid19api.com/country/"+country+"?from="+sDate+"T00:00:00Z&to="+eDate+"T00:00:00Z";
+
+        fetch(url)
+        .then((divTag) => divTag.json())
+        .then((divTag) => {
+
+            console.log(divTag);
+            var length = divTag.length;
+            var index = length-1;
+
+            var c = divTag[index].Confirmed;
+            var a = divTag[index].Active;
+            var d = divTag[index].Deaths;
+
+            confirmed.innerHTML = c;
+            active.innerHTML = a;
+            deaths.innerHTML = d;
+
+            document.getElementById("divTag").style.display="block";
+            
+        })
+    }
+}
